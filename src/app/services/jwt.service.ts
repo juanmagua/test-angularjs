@@ -4,6 +4,7 @@ import { tap } from 'rxjs/operators';
 import { User} from '../models/user';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http'; 
+import { environment } from 'src/environments/environment';
 
 @Injectable({
 providedIn: 'root'
@@ -28,7 +29,7 @@ export class JwtService {
                 .set('_password', _password);
 
 
-      return this.httpClient.post<any>('http://localhost:8000/api/login_check', 
+      return this.httpClient.post<any>(environment.apiUrl + '/api/login_check', 
                   body.toString(), 
                   this.options).pipe(tap( data => {
                      console.log("Token: " + data.token);

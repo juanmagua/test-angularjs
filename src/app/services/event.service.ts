@@ -4,6 +4,7 @@ import { tap } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
 import { JwtService } from './jwt.service';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class EventService {
 
     this.setOptions();
 
-    return this.httpClient.get<any>('http://localhost:8000/api/v1/event',
+    return this.httpClient.get<any>(environment.apiUrl + '/api/v1/event',
       this.options).pipe(tap(res => {
 
         return res;
@@ -36,7 +37,7 @@ export class EventService {
       .set('name', title)
       .set('created', date);
 
-    return this.httpClient.put<any>('http://localhost:8000/api/v1/event/' + id,
+    return this.httpClient.put<any>(environment.apiUrl + '/api/v1/event/' + id,
       params, this.options).pipe(tap(res => {
         return res;
     }))
