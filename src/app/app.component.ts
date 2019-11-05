@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { JwtService } from './services/jwt.service';
+import { Router } from '@angular/router';
+import { Location } from "@angular/common";
 
 @Component({
   selector: 'app-root',
@@ -7,9 +9,9 @@ import { JwtService } from './services/jwt.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  
   title = 'test-angularjs';
-  loggedIn = this.jwtService.loggedIn();
-
-  constructor(private jwtService: JwtService) {
+  
+  constructor(private location: Location, private router: Router) {
    }
 }

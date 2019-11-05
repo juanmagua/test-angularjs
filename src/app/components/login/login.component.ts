@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('home');
         },
         (error) => {
-            console.log("invalid login");
+            alert("invalid login");
         }
       );
 

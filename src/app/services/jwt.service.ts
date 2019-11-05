@@ -31,6 +31,8 @@ export class JwtService {
       return this.httpClient.post<any>('http://localhost:8000/api/login_check', 
                   body.toString(), 
                   this.options).pipe(tap( data => {
+                     console.log("Token: " + data.token);
+                     localStorage.clear();
                      localStorage.setItem('access_token', data.token);
                   }))
     }
@@ -44,7 +46,6 @@ export class JwtService {
     public logout(){
        localStorage.removeItem('access_token');
        localStorage.clear();
-       console.log("Delete access_token");
     }
 
     public loggedIn(): boolean{

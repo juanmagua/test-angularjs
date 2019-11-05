@@ -10,24 +10,48 @@ import { Observable } from 'rxjs';
 })
 export class EventService {
 
-  httpHeaders = new HttpHeaders({
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Authorization': 'Bearer ' + this.jwtService.getToken(),
- });
+  httpHeaders: any;
+  options: any;
 
-  options = {
-    headers: this.httpHeaders
-  };
-
-  constructor(private httpClient: HttpClient, private jwtService: JwtService) { }
+  constructor(private httpClient: HttpClient, private jwtService: JwtService) {}
 
   public getAll() {
+
+    this.setOptions();
 
     return this.httpClient.get<any>('http://localhost:8000/api/v1/event',
       this.options).pipe(tap(res => {
 
-          return res;
+        return res;
 
       }))
+  }
+
+  public update(id: string, title: string, date: string) {
+
+    this.setOptions();
+
+    const params = new HttpParams()
+      .set('id', id)
+      .set('name', title)
+      .set('created', date);
+
+    return this.httpClient.put<any>('http://localhost:8000/api/v1/event/' + id,
+      params, this.options).pipe(tap(res => {
+        return res;
+    }))
+
+  }
+
+  private setOptions(){
+    
+    this.httpHeaders = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer ' + this.jwtService.getToken(),
+    });
+
+    this.options = {
+      headers: this.httpHeaders
+    };
   }
 }

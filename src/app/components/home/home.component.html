@@ -1,5 +1,57 @@
 <div class="row">
     <div class="col-12">
-        <full-calendar (dateClick)="handleDateClick($event)" deepChangeDetection="true" [plugins]="calendarPlugins" [events]="calendarEvents"></full-calendar>
+        <full-calendar  (eventClick)="handleDateClick($event)" deepChangeDetection="true" [plugins]="calendarPlugins"
+            [events]="calendarEvents"></full-calendar>
+    </div>
+</div>
+
+
+<div *ngIf="showModal" class="modal" style="display: block" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Event</h5>
+                <button (click)="toggleModal(false)" type="button" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="editForm" class="edit-container" (ngSubmit)="editEvent()">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="hidden" class="form-control" id="id" formControlName="id" name="id">
+                            <div class="form-group"
+                                [ngClass]="{ 'has-error': isSubmitted && formControls.title.errors }">
+                                <label for="title">Title</label>
+                                <input formControlName="title" type="text" class="form-control" id="title"
+                                    placeholder="title">
+                                <small *ngIf="isSubmitted && formControls.title.errors" id="title"
+                                    class="form-text text-muted">Required.</small>
+                            </div>
+                            <div class="form-group"
+                                [ngClass]="{ 'has-error': isSubmitted && formControls.title.errors }">
+                                <label for="date">Date</label>
+                                <input type="date" formControlName="date" class="form-control" id="date">
+                                <small *ngIf="isSubmitted && formControls.date.errors" id="title"
+                                    class="form-text text-muted">Required.</small>
+                            </div>
+                            <div class="form-group"
+                                [ngClass]="{ 'has-error': isSubmitted && formControls.time.errors }">
+                                <label for="date">Time</label>
+                                <input type="time" formControlName="time" class="form-control" id="time">
+                                <small *ngIf="isSubmitted && formControls.time.errors" id="time"
+                                    class="form-text text-muted">Required.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button (click)="toggleModal(false)" type="button" class="btn btn-secondary"
+                        data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
